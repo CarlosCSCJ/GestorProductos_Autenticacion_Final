@@ -30,7 +30,11 @@ public class UserEntityService extends BaseService<UserEntity, String, UserEntit
 		userEntity.setId(String.valueOf(Math.abs(new Random().nextInt())));
 		userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 		// en caso de no haber asignado un rol en la petición, añadimos uno por defecto
-		if (userEntity.getRoles().size() == 0) {
+		if (userEntity.getRoles() == null) {
+			defaultRoles.add(UserRole.USER);
+			userEntity.setRoles(defaultRoles);
+		}
+		else if (userEntity.getRoles().size() == 0) {
 			defaultRoles.add(UserRole.USER);
 			userEntity.setRoles(defaultRoles);
 		}
